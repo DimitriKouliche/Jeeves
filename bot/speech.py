@@ -1,7 +1,17 @@
-from bot import brain
+# -*- coding: utf-8 -*-
+# !/usr/bin/env python3
+"""This module handles how Jeeves responds, it's there to make the bridge between the chat and Jeeves' brain."""
+
+from . import brain
 
 
 def respond(motor, input_text):
+    """Respond to a text
+    Args:
+        motor (Motor): Jeeves' main brain motor functions
+        input_text (str): The text the user typed
+    Returns:
+        str: A reaction"""
     routine = search_routine(motor, input_text)
     if routine:
         return routine
@@ -14,7 +24,13 @@ def respond(motor, input_text):
 
 
 def search_keyword(motor, input_text):
-    important_words = brain.Hearing.get_words(input_text, motor.memory)
+    """Searches for known keywords in a text
+    Args:
+        motor (Motor): Jeeves' main brain motor functions
+        input_text (str): The text the user typed
+    Returns:
+        str: A reaction"""
+    important_words = motor.hearing.get_words(input_text)
     for word in important_words:
         word_match = motor.check_word(word)
         if word_match:
@@ -22,6 +38,12 @@ def search_keyword(motor, input_text):
 
 
 def search_routine(motor, input_text):
+    """Searches for known routines in a text
+    Args:
+        motor (Motor): Jeeves' main brain motor functions
+        input_text (str): The text the user typed
+    Returns:
+        str: A reaction"""
     for sentence, routine_name in motor.ROUTINES.items():
         if sentence in input_text:
             routine = brain.Routine(motor)
