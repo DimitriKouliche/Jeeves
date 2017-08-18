@@ -8,6 +8,9 @@ import operator
 from textblob import TextBlob
 import requests
 import json
+import logging
+
+logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
 
 class Utils:
@@ -15,7 +18,7 @@ class Utils:
 
     @staticmethod
     def byte_string_list(byte_list):
-        """This function transforms a byte list to a string list
+        """Transforms a byte list to a string list
         Args:
             byte_list (list): List of bytes.
         Returns:
@@ -33,13 +36,13 @@ class Emotion:
             sentiment (obj): An object sentiment with two properties (polarity, subjectivity).
         Returns:
             str: A reaction to the sentiment"""
-        print('Feeling sentiment')
+        logging.info('Feeling sentiment')
         if sentiment.polarity < -0.7:
             return 'curse'
 
 
 class Memory:
-    """This class handles Jeeves' memory center.
+    """Memory handles Jeeves' memory center.
      Attributes:
          self.REDIS_DB (dict): A mapping between Redis databases IDs and memory names
          self.new_words (list): A list of the new words Jeeves discovered during the chat.
@@ -67,11 +70,11 @@ class Memory:
         Returns:
             str|None: A reaction known by Jeeves or nothing"""
         memory = self.redis_connections['words']
-        print('Searching for a match among a list of words: ' + ', '.join(words))
+        logging.info('Searching for a match among a list of words: ' + ', '.join(words))
         for word in words:
             reaction = memory.get(word)
             if reaction:
-                print("Found a reaction in memory")
+                logging.info("Found a reaction in memory")
                 return reaction.decode("utf-8")
         self.new_words += words
         self.remember_new_words()
@@ -103,7 +106,7 @@ class Memory:
             memory_type (str): a memory name"""
         if not words:
             return
-        print("Deleting these words from short term memory: " + ", ".join(words))
+        logging.warning("Deleting these words from short term memory: " + ", ".join(words))
         memory = self.redis_connections[memory_type]
         words_tuple = tuple(words)
         memory.delete(*words_tuple)
@@ -114,7 +117,7 @@ class Memory:
             words (list): a list of words"""
         if not words:
             return
-        print("Adding these words to ignore memory: " + ", ".join(words))
+        logging.warning("Adding these words to ignore memory: " + ", ".join(words))
         memory = self.redis_connections['ignored words']
         for word in words:
             memory.set(word, "useless")
@@ -161,7 +164,7 @@ class Motor:
             reaction (str): a reaction name
         Returns:
             str: A random reaction"""
-        print("Reacting to reaction " + reaction)
+        logging.info("Reacting to reaction " + reaction)
         memory = self.memory.redis_connections['reactions']
         responses = memory.lrange(reaction, 0, -1)
         return random.choice(responses).decode("utf-8")
@@ -173,7 +176,7 @@ class Motor:
             word (str): a word
         Returns:
             str|None: A random reaction"""
-        print("Checking word " + word)
+        logging.info("Checking word " + word)
         external = Research(self)
         intent = self.memory.search_word([word])
         if intent is None:
@@ -189,7 +192,7 @@ class Motor:
                 and objectivity (objective or subjective)
         Returns:
             str|None: A random reaction"""
-        print("Checking tone")
+        logging.info("Checking tone")
         reaction = Emotion.feel(sentiment)
         if reaction:
             return self.react(reaction)
@@ -334,7 +337,7 @@ class Research:
             word (str): the word we want to know about
         Returns:
             list: A list of words related to the word passed in argument"""
-        print("Searching the web for word " + word)
+        logging.info("Searching the web for word " + word)
         words = []
         headers = {'X-Mashape-Key': self.WORDS_API_KEY, 'Accept': 'application/json'}
         request = requests.get(self.WORDS_API_HOST + word, headers=headers)

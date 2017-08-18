@@ -12,6 +12,7 @@ Requirements : Python / Redis
 - Initialize basic data (cp -p ./data/dump.rdb /var/lib/redis)
 - Install pip (apt-get install -y python3-pip)
 - Run pip install -r requirements.txt
+- Run python -c "import nltk; nltk.download()" (when prompted to select a package choose "all")
 - Run python main.py
 
 ## Usage

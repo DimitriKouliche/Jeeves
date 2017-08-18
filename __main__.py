@@ -1,5 +1,8 @@
+# -*- coding: utf-8 -*-
+# !/usr/bin/env python3
+"""This is the main way to communicate to Jeeves: using a tkinter UI"""
+
 from tkinter import *
-import nltk
 from bot import speech
 from bot import brain
 
@@ -20,11 +23,12 @@ input_field.focus_set()
 
 
 def main():
-    nltk.download('all')
+    """Called when we launch the project"""
     draw_gui()
 
 
 def draw_gui():
+    """Sets up the UI"""
     input_field.pack(side=BOTTOM, fill=X)
     frame = Frame(window)
     input_field.bind("<Return>", enter_pressed)
@@ -33,6 +37,10 @@ def draw_gui():
 
 
 def insert_message(message, color):
+    """Inserts a message in the main window
+    Args:
+        message (str): A message to insert in our window
+        color (str): The color we want the message to display in."""
     messages.config(state=NORMAL)
     messages.insert(END, message, color)
     messages.config(state=DISABLED)
@@ -42,10 +50,13 @@ def insert_message(message, color):
 
 
 def enter_pressed(event):
+    """Fires whenever enter is pressed, retrieves user inputs and responds to it
+    Args:
+        event (str): The event that was sent"""
     input_get = input_field.get()
     insert_message('%s\n' % input_get, "blue")
     insert_message('%s\n\n' % speech.respond(motor, input_get.lower()), "red")
     return "break"
 
-
-main()
+if __name__ == '__main__':
+    main()
