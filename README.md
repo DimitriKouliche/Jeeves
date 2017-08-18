@@ -13,7 +13,8 @@ Requirements : Python / Redis
 - Install pip (apt-get install -y python3-pip)
 - Run pip install -r requirements.txt
 - Run python -c "import nltk; nltk.download()" (when prompted to select a package choose "all")
-- Run python .
+- Run python . if you want to talk to Jeeves
+- Run python slack.py if you want to add Jeeves to slack (you will need to add a bot then create the environment variable SLACK_BOT_TOKEN with the token slack provides)
 
 ## Usage
 
@@ -31,4 +32,4 @@ You can talk to Jeeves in a regular way but if you want him to learn something, 
   
 ## Incoming features
 * You can now learn Jeeves how to react to certain words
-* You can now talk to Jeeves on Slack
+* Jeeves now randomly asks you to teach him things he doesn't understand
