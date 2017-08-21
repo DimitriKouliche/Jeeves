@@ -9,7 +9,7 @@ def respond(motor, input_text):
     """Respond to a text
     Args:
         motor (Motor): Jeeves' main brain motor functions
-        input_text (str): The text the user typed
+        input_text (str): The input the user typed
     Returns:
         str: A reaction"""
     routine = search_routine(motor, input_text)

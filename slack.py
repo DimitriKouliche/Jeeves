@@ -16,11 +16,15 @@ motor = brain.Motor()
 
 if sc.rtm_connect():
     while True:
-        hooks = sc.rtm_read()
-        for hook in hooks:
-            if 'type' in hook and hook['type'] == 'message':
-                response = speech.respond(motor, hook['text'].lower())
-                sc.rtm_send_message(hook['channel'], response)
+        try:
+            hooks = sc.rtm_read()
+            for hook in hooks:
+                if 'type' in hook and hook['type'] == 'message' and 'text' in hook:
+                    response = speech.respond(motor, hook['text'].lower())
+                    sc.rtm_send_message(hook['channel'], response)
+        except Exception as e:
+            logging.exception("message")
+            pass
 
         time.sleep(1)
 else:
