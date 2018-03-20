@@ -10,9 +10,12 @@ from bot import speech
 from bot import brain
 
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
+logging.info('Starting slack connection...')
 slack_token = os.environ["SLACK_BOT_TOKEN"]
 sc = SlackClient(slack_token)
+logging.info('Starting Jeeves brain functions...')
 motor = brain.Motor()
+logging.info('Jeeves is awake')
 
 if sc.rtm_connect():
     while True:

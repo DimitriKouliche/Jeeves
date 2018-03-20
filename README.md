@@ -3,6 +3,15 @@
 This project is a Chatbot. My goal is to make him intelligent.
   
 ## Installation
+
+First copy .env.dist and fill in missing values (slack token)
+
+### Using docker
+
+- Run docker-compose build
+- Run docker-compose up
+  
+### By hand
   
 Requirements : Python / Redis
 

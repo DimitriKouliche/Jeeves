@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # !/usr/bin/env python3
 """This module handles the brain part of Jeeves (memory, motor skills, reflexes and emotions"""
-
+import os
 import redis
 import random
 import operator
@@ -52,8 +52,9 @@ class Memory:
     redis_connections = {}
 
     def __init__(self):
+        redis_host = os.environ["REDIS_HOST"]
         for name, db in self.REDIS_DB.items():
-            self.redis_connections[name] = redis.StrictRedis(db=db)
+            self.redis_connections[name] = redis.StrictRedis(host=redis_host, db=db)
 
     def init_memory(self, name):
         """Retrieves the Redis connection associated to a memory
