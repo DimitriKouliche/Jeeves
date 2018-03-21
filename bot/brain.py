@@ -168,7 +168,9 @@ class Motor:
         logging.info("Reacting to reaction " + reaction)
         memory = self.memory.redis_connections['reactions']
         responses = memory.lrange(reaction, 0, -1)
-        return random.choice(responses).decode("utf-8")
+        if responses:
+            return random.choice(responses).decode("utf-8")
+        return "Sorry, I had a moment of absence, could you please repeat what you were saying?"
 
     def check_word(self, word):
         """Checks if Jeeves knows the word. If he doesn't, searches the internet to see
