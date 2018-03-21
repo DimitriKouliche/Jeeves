@@ -58,6 +58,7 @@ class Memory:
         """Initializes redis databases connections"""
         redis_host = os.environ["REDIS_HOST"]
         for name, db in self.REDIS_DB.items():
+            logging.info(f"Connecting with memory {name}")
             self.redis_connections[name] = redis.StrictRedis(host=redis_host, db=db)
 
     def init_memory(self, name):
@@ -174,6 +175,7 @@ class Motor:
         responses = memory.lrange(reaction, 0, -1)
         if responses:
             return random.choice(responses).decode("utf-8")
+        logging.info("Lost connection with memory.")
         self.memory.create_redis_connections()
         return "Sorry, I had a moment of absence, could you please repeat what you were saying?"
 
