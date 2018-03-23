@@ -83,13 +83,6 @@ class Memory:
                 logging.info("Found a reaction in memory")
                 return reaction.decode("utf-8")
         self.new_words += words
-        self.remember_new_words()
-
-    def remember_new_words(self):
-        """Stores new words in memory"""
-        memory = self.redis_connections['new words']
-        for word in self.new_words:
-            memory.incr(word)
 
     def filter_ignored_words(self, words):
         """Removes words that Jeeves is supposed to ignore from a list of words

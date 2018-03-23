@@ -15,10 +15,10 @@ First copy .env.dist and fill in missing values (slack token)
   
 Requirements : Python / Redis
 
-- Install python (apt-get install python3.6)
+- Install python (google it)
 - Install redis (apt-get install redis-server)
 - Run redis-server
-- Initialize basic data (cp -p ./data/dump.rdb /var/lib/redis)
+- Initialize basic data (copy data/dump.rdb in your redis dir)
 - Install pip (apt-get install -y python3-pip)
 - Run pip install -r requirements.txt
 - Run python -c "import nltk; nltk.download()" (when prompted to select a package choose "all")
