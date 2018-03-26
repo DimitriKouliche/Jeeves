@@ -57,9 +57,11 @@ class Memory:
     def create_redis_connections(self):
         """Initializes redis databases connections"""
         redis_host = os.environ["REDIS_HOST"]
+        redis_password = os.environ["REDIS_PASSWORD"]
         for name, db in self.REDIS_DB.items():
             logging.info(f"Connecting with memory {name}")
-            self.redis_connections[name] = redis.StrictRedis(host=redis_host, db=db, socket_keepalive=True)
+            self.redis_connections[name] = redis.StrictRedis(host=redis_host, db=db, socket_keepalive=True,
+                                                             password=redis_password)
 
     def init_memory(self, name):
         """Retrieves the Redis connection associated to a memory

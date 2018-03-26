@@ -2,9 +2,10 @@ version: '3'
 
 services:
   redis:
-    image: redis
+    image: 'redis:4-alpine'
+    command: redis-server --requirepass wMD5rd2VgNa765Y7
     ports:
-      - "6379:6379"
+      - '6379:6379'
     volumes:
       - ./data:/data
   web:
